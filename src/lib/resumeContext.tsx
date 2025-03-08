@@ -13,15 +13,18 @@ export type PersonalInfo = {
 };
 
 export type Experience = {
+  id: string;
   company: string;
   position: string;
   location: string;
   startDate: string;
   endDate: string;
   description: string;
+  current?: boolean;
 };
 
 export type Education = {
+  id: string;
   institution: string;
   degree: string;
   location: string;
@@ -31,8 +34,17 @@ export type Education = {
 };
 
 export type Project = {
+  id: string;
   name: string;
   description: string;
+  technologies?: string;
+  link?: string;
+};
+
+export type Skill = {
+  id: string;
+  name: string;
+  level: number;
 };
 
 export type Certification = {
@@ -45,7 +57,7 @@ export type ResumeData = {
   personal: PersonalInfo;
   experience: Experience[];
   education: Education[];
-  skills: string[];
+  skills: Skill[];
   projects: Project[];
   certifications: Certification[];
 };
@@ -54,23 +66,26 @@ type ResumeContextType = {
   resumeData: ResumeData;
   setResumeData: React.Dispatch<React.SetStateAction<ResumeData>>;
   updatePersonalInfo: (info: Partial<PersonalInfo>) => void;
-  addExperience: (exp: Experience) => void;
-  updateExperience: (index: number, exp: Experience) => void;
-  removeExperience: (index: number) => void;
-  addEducation: (edu: Education) => void;
-  updateEducation: (index: number, edu: Education) => void;
-  removeEducation: (index: number) => void;
-  addSkill: (skill: string) => void;
-  removeSkill: (index: number) => void;
-  addProject: (project: Project) => void;
-  updateProject: (index: number, project: Project) => void;
-  removeProject: (index: number) => void;
+  addExperience: (exp: Partial<Experience>) => void;
+  updateExperience: (id: string, exp: Partial<Experience>) => void;
+  removeExperience: (id: string) => void;
+  addEducation: (edu: Partial<Education>) => void;
+  updateEducation: (id: string, edu: Partial<Education>) => void;
+  removeEducation: (id: string) => void;
+  addSkill: (skill: Partial<Skill>) => void;
+  updateSkill: (id: string, skill: Partial<Skill>) => void;
+  removeSkill: (id: string) => void;
+  addProject: (project: Partial<Project>) => void;
+  updateProject: (id: string, project: Partial<Project>) => void;
+  removeProject: (id: string) => void;
   addCertification: (cert: Certification) => void;
   updateCertification: (index: number, cert: Certification) => void;
   removeCertification: (index: number) => void;
   selectedTemplate: string;
   setSelectedTemplate: (template: string) => void;
 };
+
+const generateId = () => Math.random().toString(36).substr(2, 9);
 
 const initialResumeData: ResumeData = {
   personal: {
@@ -85,24 +100,29 @@ const initialResumeData: ResumeData = {
   },
   experience: [
     {
+      id: generateId(),
       company: "Tech Company",
       position: "Senior Software Engineer",
       location: "San Francisco, CA",
       startDate: "2020",
       endDate: "Present",
-      description: "Led development of key features for the company's flagship product. Mentored junior developers and improved team processes."
+      description: "Led development of key features for the company's flagship product. Mentored junior developers and improved team processes.",
+      current: true
     },
     {
+      id: generateId(),
       company: "Startup Inc.",
       position: "Software Developer",
       location: "San Francisco, CA",
       startDate: "2018",
       endDate: "2020",
-      description: "Developed and maintained web applications using React and Node.js. Collaborated closely with design team."
+      description: "Developed and maintained web applications using React and Node.js. Collaborated closely with design team.",
+      current: false
     }
   ],
   education: [
     {
+      id: generateId(),
       institution: "University of California",
       degree: "Bachelor of Science in Computer Science",
       location: "Berkeley, CA",
@@ -112,16 +132,29 @@ const initialResumeData: ResumeData = {
     }
   ],
   skills: [
-    "JavaScript", "TypeScript", "React", "Node.js", "HTML/CSS", "Git", "Python", "SQL"
+    { id: generateId(), name: "JavaScript", level: 5 },
+    { id: generateId(), name: "TypeScript", level: 4 },
+    { id: generateId(), name: "React", level: 5 },
+    { id: generateId(), name: "Node.js", level: 4 },
+    { id: generateId(), name: "HTML/CSS", level: 5 },
+    { id: generateId(), name: "Git", level: 4 },
+    { id: generateId(), name: "Python", level: 3 },
+    { id: generateId(), name: "SQL", level: 4 }
   ],
   projects: [
     {
+      id: generateId(),
       name: "E-commerce Platform",
-      description: "Built a full-stack e-commerce platform using React, Node.js, and MongoDB."
+      description: "Built a full-stack e-commerce platform using React, Node.js, and MongoDB.",
+      technologies: "React, Node.js, MongoDB",
+      link: "https://github.com/johndoe/ecommerce"
     },
     {
+      id: generateId(),
       name: "Portfolio Website",
-      description: "Designed and developed a personal portfolio website to showcase projects and skills."
+      description: "Designed and developed a personal portfolio website to showcase projects and skills.",
+      technologies: "React, Next.js, Tailwind CSS",
+      link: "https://johndoe.com"
     }
   ],
   certifications: [
@@ -146,83 +179,130 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }));
   };
 
-  const addExperience = (exp: Experience) => {
+  const addExperience = (exp: Partial<Experience>) => {
+    const newExp: Experience = {
+      id: generateId(),
+      company: exp.company || "",
+      position: exp.position || "",
+      location: exp.location || "",
+      startDate: exp.startDate || "",
+      endDate: exp.endDate || "",
+      description: exp.description || "",
+      current: exp.current || false
+    };
+    
     setResumeData(prev => ({
       ...prev,
-      experience: [...prev.experience, exp]
+      experience: [...prev.experience, newExp]
     }));
   };
 
-  const updateExperience = (index: number, exp: Experience) => {
+  const updateExperience = (id: string, exp: Partial<Experience>) => {
     setResumeData(prev => {
-      const newExperience = [...prev.experience];
-      newExperience[index] = exp;
+      const newExperience = prev.experience.map(item => 
+        item.id === id ? { ...item, ...exp } : item
+      );
       return { ...prev, experience: newExperience };
     });
   };
 
-  const removeExperience = (index: number) => {
+  const removeExperience = (id: string) => {
     setResumeData(prev => ({
       ...prev,
-      experience: prev.experience.filter((_, i) => i !== index)
+      experience: prev.experience.filter(item => item.id !== id)
     }));
   };
 
-  const addEducation = (edu: Education) => {
+  const addEducation = (edu: Partial<Education>) => {
+    const newEdu: Education = {
+      id: generateId(),
+      institution: edu.institution || "",
+      degree: edu.degree || "",
+      location: edu.location || "",
+      startDate: edu.startDate || "",
+      endDate: edu.endDate || "",
+      description: edu.description || ""
+    };
+    
     setResumeData(prev => ({
       ...prev,
-      education: [...prev.education, edu]
+      education: [...prev.education, newEdu]
     }));
   };
 
-  const updateEducation = (index: number, edu: Education) => {
+  const updateEducation = (id: string, edu: Partial<Education>) => {
     setResumeData(prev => {
-      const newEducation = [...prev.education];
-      newEducation[index] = edu;
+      const newEducation = prev.education.map(item => 
+        item.id === id ? { ...item, ...edu } : item
+      );
       return { ...prev, education: newEducation };
     });
   };
 
-  const removeEducation = (index: number) => {
+  const removeEducation = (id: string) => {
     setResumeData(prev => ({
       ...prev,
-      education: prev.education.filter((_, i) => i !== index)
+      education: prev.education.filter(item => item.id !== id)
     }));
   };
 
-  const addSkill = (skill: string) => {
+  const addSkill = (skill: Partial<Skill>) => {
+    const newSkill: Skill = {
+      id: generateId(),
+      name: skill.name || "",
+      level: skill.level || 3
+    };
+    
     setResumeData(prev => ({
       ...prev,
-      skills: [...prev.skills, skill]
+      skills: [...prev.skills, newSkill]
     }));
   };
 
-  const removeSkill = (index: number) => {
-    setResumeData(prev => ({
-      ...prev,
-      skills: prev.skills.filter((_, i) => i !== index)
-    }));
-  };
-
-  const addProject = (project: Project) => {
-    setResumeData(prev => ({
-      ...prev,
-      projects: [...prev.projects, project]
-    }));
-  };
-
-  const updateProject = (index: number, project: Project) => {
+  const updateSkill = (id: string, skill: Partial<Skill>) => {
     setResumeData(prev => {
-      const newProjects = [...prev.projects];
-      newProjects[index] = project;
+      const newSkills = prev.skills.map(item => 
+        item.id === id ? { ...item, ...skill } : item
+      );
+      return { ...prev, skills: newSkills };
+    });
+  };
+
+  const removeSkill = (id: string) => {
+    setResumeData(prev => ({
+      ...prev,
+      skills: prev.skills.filter(item => item.id !== id)
+    }));
+  };
+
+  const addProject = (project: Partial<Project>) => {
+    const newProject: Project = {
+      id: generateId(),
+      name: project.name || "",
+      description: project.description || "",
+      technologies: project.technologies,
+      link: project.link
+    };
+    
+    setResumeData(prev => ({
+      ...prev,
+      projects: [...prev.projects, newProject]
+    }));
+  };
+
+  const updateProject = (id: string, project: Partial<Project>) => {
+    setResumeData(prev => {
+      const newProjects = prev.projects.map(item => 
+        item.id === id ? { ...item, ...project } : item
+      );
       return { ...prev, projects: newProjects };
     });
   };
 
-  const removeProject = (index: number) => {
+  const removeProject = (id: string) => {
     setResumeData(prev => ({
       ...prev,
-      projects: prev.projects.filter((_, i) => i !== index)
+      projects: prev.projects.filter(item => item.id !== id)
     }));
   };
 
@@ -259,6 +339,7 @@ export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     updateEducation,
     removeEducation,
     addSkill,
+    updateSkill,
     removeSkill,
     addProject,
     updateProject,
