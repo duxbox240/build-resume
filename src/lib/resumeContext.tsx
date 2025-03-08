@@ -1,246 +1,273 @@
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState } from "react";
 
-export type Education = {
-  id: string;
-  institution: string;
-  degree: string;
-  field: string;
-  startDate: string;
-  endDate: string;
-  description: string;
+export type PersonalInfo = {
+  name: string;
+  title: string;
+  email: string;
+  phone: string;
+  location: string;
+  website: string;
+  summary: string;
+  photo?: string;
 };
 
 export type Experience = {
-  id: string;
   company: string;
   position: string;
   location: string;
   startDate: string;
   endDate: string;
-  current: boolean;
+  description: string;
+};
+
+export type Education = {
+  institution: string;
+  degree: string;
+  location: string;
+  startDate: string;
+  endDate: string;
   description: string;
 };
 
 export type Project = {
-  id: string;
   name: string;
   description: string;
-  technologies: string;
-  link: string;
 };
 
-export type Skill = {
-  id: string;
+export type Certification = {
   name: string;
-  level: number;
-};
-
-export type PersonalInfo = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  title: string;
-  website: string;
-  location: string;
-  summary: string;
-  profileImage: string | null;
+  issuer: string;
+  date: string;
 };
 
 export type ResumeData = {
-  personalInfo: PersonalInfo;
-  education: Education[];
+  personal: PersonalInfo;
   experience: Experience[];
+  education: Education[];
+  skills: string[];
   projects: Project[];
-  skills: Skill[];
+  certifications: Certification[];
 };
 
-export type TemplateType = 'modern' | 'minimalist' | 'classic' | 'professional';
-
-export type ResumeContextType = {
+type ResumeContextType = {
   resumeData: ResumeData;
+  setResumeData: React.Dispatch<React.SetStateAction<ResumeData>>;
   updatePersonalInfo: (info: Partial<PersonalInfo>) => void;
-  addEducation: (education: Omit<Education, 'id'>) => void;
-  updateEducation: (id: string, education: Partial<Education>) => void;
-  removeEducation: (id: string) => void;
-  addExperience: (experience: Omit<Experience, 'id'>) => void;
-  updateExperience: (id: string, experience: Partial<Experience>) => void;
-  removeExperience: (id: string) => void;
-  addProject: (project: Omit<Project, 'id'>) => void;
-  updateProject: (id: string, project: Partial<Project>) => void;
-  removeProject: (id: string) => void;
-  addSkill: (skill: Omit<Skill, 'id'>) => void;
-  updateSkill: (id: string, skill: Partial<Skill>) => void;
-  removeSkill: (id: string) => void;
-  selectedTemplate: TemplateType;
-  setSelectedTemplate: (template: TemplateType) => void;
-  reset: () => void;
+  addExperience: (exp: Experience) => void;
+  updateExperience: (index: number, exp: Experience) => void;
+  removeExperience: (index: number) => void;
+  addEducation: (edu: Education) => void;
+  updateEducation: (index: number, edu: Education) => void;
+  removeEducation: (index: number) => void;
+  addSkill: (skill: string) => void;
+  removeSkill: (index: number) => void;
+  addProject: (project: Project) => void;
+  updateProject: (index: number, project: Project) => void;
+  removeProject: (index: number) => void;
+  addCertification: (cert: Certification) => void;
+  updateCertification: (index: number, cert: Certification) => void;
+  removeCertification: (index: number) => void;
+  selectedTemplate: string;
+  setSelectedTemplate: (template: string) => void;
 };
 
-const defaultPersonalInfo: PersonalInfo = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  phone: '',
-  title: '',
-  website: '',
-  location: '',
-  summary: '',
-  profileImage: null,
+const initialResumeData: ResumeData = {
+  personal: {
+    name: "John Doe",
+    title: "Software Engineer",
+    email: "john.doe@example.com",
+    phone: "(123) 456-7890",
+    location: "San Francisco, CA",
+    website: "johndoe.com",
+    summary: "Experienced software engineer with a passion for building innovative solutions to complex problems.",
+    photo: "",
+  },
+  experience: [
+    {
+      company: "Tech Company",
+      position: "Senior Software Engineer",
+      location: "San Francisco, CA",
+      startDate: "2020",
+      endDate: "Present",
+      description: "Led development of key features for the company's flagship product. Mentored junior developers and improved team processes."
+    },
+    {
+      company: "Startup Inc.",
+      position: "Software Developer",
+      location: "San Francisco, CA",
+      startDate: "2018",
+      endDate: "2020",
+      description: "Developed and maintained web applications using React and Node.js. Collaborated closely with design team."
+    }
+  ],
+  education: [
+    {
+      institution: "University of California",
+      degree: "Bachelor of Science in Computer Science",
+      location: "Berkeley, CA",
+      startDate: "2014",
+      endDate: "2018",
+      description: "Graduated with honors. Member of computer science club."
+    }
+  ],
+  skills: [
+    "JavaScript", "TypeScript", "React", "Node.js", "HTML/CSS", "Git", "Python", "SQL"
+  ],
+  projects: [
+    {
+      name: "E-commerce Platform",
+      description: "Built a full-stack e-commerce platform using React, Node.js, and MongoDB."
+    },
+    {
+      name: "Portfolio Website",
+      description: "Designed and developed a personal portfolio website to showcase projects and skills."
+    }
+  ],
+  certifications: [
+    {
+      name: "AWS Certified Developer",
+      issuer: "Amazon Web Services",
+      date: "2022"
+    }
+  ]
 };
 
-const defaultResumeData: ResumeData = {
-  personalInfo: defaultPersonalInfo,
-  education: [],
-  experience: [],
-  projects: [],
-  skills: [],
-};
+const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
 
-export const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
-
-export const ResumeProvider = ({ children }: { children: ReactNode }) => {
-  const [resumeData, setResumeData] = useState<ResumeData>(defaultResumeData);
-  const [selectedTemplate, setSelectedTemplate] = useState<TemplateType>('modern');
+export const ResumeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [resumeData, setResumeData] = useState<ResumeData>(initialResumeData);
+  const [selectedTemplate, setSelectedTemplate] = useState<string>("modern");
 
   const updatePersonalInfo = (info: Partial<PersonalInfo>) => {
     setResumeData(prev => ({
       ...prev,
-      personalInfo: { ...prev.personalInfo, ...info },
+      personal: { ...prev.personal, ...info }
     }));
   };
 
-  const addEducation = (education: Omit<Education, 'id'>) => {
-    const newEducation = {
-      ...education,
-      id: `edu-${Date.now()}`,
-    };
+  const addExperience = (exp: Experience) => {
     setResumeData(prev => ({
       ...prev,
-      education: [...prev.education, newEducation],
+      experience: [...prev.experience, exp]
     }));
   };
 
-  const updateEducation = (id: string, education: Partial<Education>) => {
+  const updateExperience = (index: number, exp: Experience) => {
+    setResumeData(prev => {
+      const newExperience = [...prev.experience];
+      newExperience[index] = exp;
+      return { ...prev, experience: newExperience };
+    });
+  };
+
+  const removeExperience = (index: number) => {
     setResumeData(prev => ({
       ...prev,
-      education: prev.education.map(item => 
-        item.id === id ? { ...item, ...education } : item
-      ),
+      experience: prev.experience.filter((_, i) => i !== index)
     }));
   };
 
-  const removeEducation = (id: string) => {
+  const addEducation = (edu: Education) => {
     setResumeData(prev => ({
       ...prev,
-      education: prev.education.filter(item => item.id !== id),
+      education: [...prev.education, edu]
     }));
   };
 
-  const addExperience = (experience: Omit<Experience, 'id'>) => {
-    const newExperience = {
-      ...experience,
-      id: `exp-${Date.now()}`,
-    };
+  const updateEducation = (index: number, edu: Education) => {
+    setResumeData(prev => {
+      const newEducation = [...prev.education];
+      newEducation[index] = edu;
+      return { ...prev, education: newEducation };
+    });
+  };
+
+  const removeEducation = (index: number) => {
     setResumeData(prev => ({
       ...prev,
-      experience: [...prev.experience, newExperience],
+      education: prev.education.filter((_, i) => i !== index)
     }));
   };
 
-  const updateExperience = (id: string, experience: Partial<Experience>) => {
+  const addSkill = (skill: string) => {
     setResumeData(prev => ({
       ...prev,
-      experience: prev.experience.map(item => 
-        item.id === id ? { ...item, ...experience } : item
-      ),
+      skills: [...prev.skills, skill]
     }));
   };
 
-  const removeExperience = (id: string) => {
+  const removeSkill = (index: number) => {
     setResumeData(prev => ({
       ...prev,
-      experience: prev.experience.filter(item => item.id !== id),
+      skills: prev.skills.filter((_, i) => i !== index)
     }));
   };
 
-  const addProject = (project: Omit<Project, 'id'>) => {
-    const newProject = {
-      ...project,
-      id: `proj-${Date.now()}`,
-    };
+  const addProject = (project: Project) => {
     setResumeData(prev => ({
       ...prev,
-      projects: [...prev.projects, newProject],
+      projects: [...prev.projects, project]
     }));
   };
 
-  const updateProject = (id: string, project: Partial<Project>) => {
+  const updateProject = (index: number, project: Project) => {
+    setResumeData(prev => {
+      const newProjects = [...prev.projects];
+      newProjects[index] = project;
+      return { ...prev, projects: newProjects };
+    });
+  };
+
+  const removeProject = (index: number) => {
     setResumeData(prev => ({
       ...prev,
-      projects: prev.projects.map(item => 
-        item.id === id ? { ...item, ...project } : item
-      ),
+      projects: prev.projects.filter((_, i) => i !== index)
     }));
   };
 
-  const removeProject = (id: string) => {
+  const addCertification = (cert: Certification) => {
     setResumeData(prev => ({
       ...prev,
-      projects: prev.projects.filter(item => item.id !== id),
+      certifications: [...prev.certifications, cert]
     }));
   };
 
-  const addSkill = (skill: Omit<Skill, 'id'>) => {
-    const newSkill = {
-      ...skill,
-      id: `skill-${Date.now()}`,
-    };
+  const updateCertification = (index: number, cert: Certification) => {
+    setResumeData(prev => {
+      const newCertifications = [...prev.certifications];
+      newCertifications[index] = cert;
+      return { ...prev, certifications: newCertifications };
+    });
+  };
+
+  const removeCertification = (index: number) => {
     setResumeData(prev => ({
       ...prev,
-      skills: [...prev.skills, newSkill],
+      certifications: prev.certifications.filter((_, i) => i !== index)
     }));
-  };
-
-  const updateSkill = (id: string, skill: Partial<Skill>) => {
-    setResumeData(prev => ({
-      ...prev,
-      skills: prev.skills.map(item => 
-        item.id === id ? { ...item, ...skill } : item
-      ),
-    }));
-  };
-
-  const removeSkill = (id: string) => {
-    setResumeData(prev => ({
-      ...prev,
-      skills: prev.skills.filter(item => item.id !== id),
-    }));
-  };
-
-  const reset = () => {
-    setResumeData(defaultResumeData);
   };
 
   const value = {
     resumeData,
+    setResumeData,
     updatePersonalInfo,
-    addEducation,
-    updateEducation,
-    removeEducation,
     addExperience,
     updateExperience,
     removeExperience,
+    addEducation,
+    updateEducation,
+    removeEducation,
+    addSkill,
+    removeSkill,
     addProject,
     updateProject,
     removeProject,
-    addSkill,
-    updateSkill,
-    removeSkill,
+    addCertification,
+    updateCertification,
+    removeCertification,
     selectedTemplate,
-    setSelectedTemplate,
-    reset
+    setSelectedTemplate
   };
 
   return (
@@ -250,10 +277,10 @@ export const ResumeProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const useResume = () => {
+export const useResumeContext = () => {
   const context = useContext(ResumeContext);
   if (context === undefined) {
-    throw new Error('useResume must be used within a ResumeProvider');
+    throw new Error('useResumeContext must be used within a ResumeProvider');
   }
   return context;
 };

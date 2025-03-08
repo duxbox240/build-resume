@@ -1,84 +1,50 @@
 
-import { TemplateType } from './resumeContext';
+import ModernTemplate from "@/components/templates/ModernTemplate";
+import MinimalistTemplate from "@/components/templates/MinimalistTemplate";
+import ClassicTemplate from "@/components/templates/ClassicTemplate";
+import ProfessionalTemplate from "@/components/templates/ProfessionalTemplate";
+import { ResumeData } from "./resumeContext";
 
-export interface TemplateConfig {
-  id: TemplateType;
+export type TemplateType = {
+  key: string;
   name: string;
   description: string;
-  previewImage: string;
-  fontFamily: string;
-  primaryColor: string;
-  cardStyle: string;
-  features: string[];
-}
+  image: string;
+  component: React.ComponentType<{ resumeData: ResumeData }>;
+};
 
-export const templates: TemplateConfig[] = [
+export const TEMPLATES: TemplateType[] = [
   {
-    id: 'modern',
-    name: 'Modern',
-    description: 'Clean and contemporary design with a focus on visual appeal and readability.',
-    previewImage: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=2070&auto=format&fit=crop',
-    fontFamily: 'font-sans',
-    primaryColor: 'text-blue-600',
-    cardStyle: 'border-l-4 border-blue-500',
-    features: [
-      'Bold section headers',
-      'Strategic use of whitespace',
-      'Clean typography',
-      'Modern layout'
-    ]
+    key: "modern",
+    name: "Modern",
+    description: "A clean, contemporary design with a touch of color",
+    image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=2070&auto=format&fit=crop",
+    component: ModernTemplate,
   },
   {
-    id: 'minimalist',
-    name: 'Minimalist',
-    description: 'Elegant simplicity with a focus on content and minimal design elements.',
-    previewImage: 'https://images.unsplash.com/photo-1586282391129-76a6df230234?q=80&w=2070&auto=format&fit=crop',
-    fontFamily: 'font-sans',
-    primaryColor: 'text-gray-800',
-    cardStyle: 'border-t border-gray-200',
-    features: [
-      'Generous whitespace',
-      'Subtle design elements',
-      'Focus on content',
-      'Simple elegance'
-    ]
+    key: "minimalist",
+    name: "Minimalist",
+    description: "Simple and elegant with plenty of white space",
+    image: "https://images.unsplash.com/photo-1626197031507-c17099753214?q=80&w=2071&auto=format&fit=crop",
+    component: MinimalistTemplate,
   },
   {
-    id: 'classic',
-    name: 'Classic',
-    description: 'Timeless and traditional format that has stood the test of time.',
-    previewImage: 'https://images.unsplash.com/photo-1517842645767-c639042777db?q=80&w=2070&auto=format&fit=crop',
-    fontFamily: 'font-serif',
-    primaryColor: 'text-slate-700',
-    cardStyle: 'border-b border-slate-300',
-    features: [
-      'Traditional layout',
-      'Established format',
-      'Formal structure',
-      'Time-tested design'
-    ]
+    key: "classic",
+    name: "Classic",
+    description: "Traditional resume format with serif fonts",
+    image: "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?q=80&w=2080&auto=format&fit=crop",
+    component: ClassicTemplate,
   },
   {
-    id: 'professional',
-    name: 'Professional',
-    description: 'Bold and confident design to make a strong impression.',
-    previewImage: 'https://images.unsplash.com/photo-1563906267088-b029e7101114?q=80&w=2070&auto=format&fit=crop',
-    fontFamily: 'font-sans',
-    primaryColor: 'text-emerald-700',
-    cardStyle: 'border-l-4 border-emerald-500',
-    features: [
-      'Strong visual hierarchy',
-      'Bold design elements',
-      'Professional appearance',
-      'Confident layout'
-    ]
-  }
+    key: "professional",
+    name: "Professional",
+    description: "Bold header with a professional layout",
+    image: "https://images.unsplash.com/photo-1616400619175-5beda3a17896?q=80&w=1974&auto=format&fit=crop",
+    component: ProfessionalTemplate,
+  },
 ];
 
-export const getTemplateConfig = (templateId: TemplateType): TemplateConfig => {
-  const template = templates.find(t => t.id === templateId);
-  if (!template) {
-    return templates[0]; // Default to first template if not found
-  }
-  return template;
+export const getTemplateByKey = (key: string) => {
+  const template = TEMPLATES.find((t) => t.key === key);
+  return template?.component || ModernTemplate;
 };

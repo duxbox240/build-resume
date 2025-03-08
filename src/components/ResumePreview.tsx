@@ -1,0 +1,36 @@
+
+import { useRef } from "react";
+import { useResumeContext } from "@/lib/resumeContext";
+import { getTemplateByKey } from "@/lib/templates";
+import { cn } from "@/lib/utils";
+
+interface ResumePreviewProps {
+  fullPage?: boolean;
+}
+
+const ResumePreview = ({ fullPage = false }: ResumePreviewProps) => {
+  const { resumeData, selectedTemplate } = useResumeContext();
+  const previewRef = useRef<HTMLDivElement>(null);
+
+  const Template = getTemplateByKey(selectedTemplate);
+
+  return (
+    <div className={cn(
+      "bg-white rounded-lg shadow-lg overflow-hidden",
+      fullPage ? "w-full h-auto min-h-[1056px]" : "w-full aspect-[1/1.414] scale-90 origin-top", // A4 ratio
+    )}>
+      <div 
+        ref={previewRef}
+        className="w-full h-full bg-white"
+        style={{
+          transform: fullPage ? "none" : "scale(0.7)",
+          transformOrigin: "top center",
+        }}
+      >
+        <Template resumeData={resumeData} />
+      </div>
+    </div>
+  );
+};
+
+export default ResumePreview;
