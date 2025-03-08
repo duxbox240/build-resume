@@ -116,7 +116,7 @@ const ProfessionalTemplate = ({ resumeData }: ProfessionalTemplateProps) => {
                 <div className="space-y-2">
                   {skills.map((skill, index) => (
                     <div key={index} className="bg-gray-100 px-3 py-1 rounded text-sm">
-                      {skill}
+                      {skill.name}
                     </div>
                   ))}
                 </div>

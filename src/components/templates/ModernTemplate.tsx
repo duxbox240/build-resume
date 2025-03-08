@@ -96,7 +96,7 @@ const ModernTemplate = ({ resumeData }: ModernTemplateProps) => {
           <div className="flex flex-wrap gap-2">
             {skills.map((skill, index) => (
               <span key={index} className="bg-primary/10 px-2 py-1 rounded text-xs">
-                {skill}
+                {skill.name}
               </span>
             ))}
           </div>

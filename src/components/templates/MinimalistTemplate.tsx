@@ -76,7 +76,7 @@ const MinimalistTemplate = ({ resumeData }: MinimalistTemplateProps) => {
           <div className="flex flex-wrap gap-x-4 gap-y-2">
             {skills.map((skill, index) => (
               <span key={index} className="text-sm">
-                {skill}{index < skills.length - 1 ? " •" : ""}
+                {skill.name}{index < skills.length - 1 ? " •" : ""}
               </span>
             ))}
           </div>

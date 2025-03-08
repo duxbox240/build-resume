@@ -96,7 +96,7 @@ const ClassicTemplate = ({ resumeData }: ClassicTemplateProps) => {
           <div className="flex flex-wrap gap-x-1 gap-y-1">
             {skills.map((skill, index) => (
               <span key={index} className="text-sm">
-                {skill}{index < skills.length - 1 ? ", " : ""}
+                {skill.name}{index < skills.length - 1 ? ", " : ""}
               </span>
             ))}
           </div>
