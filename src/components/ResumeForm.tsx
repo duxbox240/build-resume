@@ -1,11 +1,10 @@
-
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { useResume } from '@/lib/resumeContext';
+import { useResumeContext } from '@/lib/resumeContext';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { PlusCircle, Trash2, Upload } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
@@ -27,7 +26,7 @@ const ResumeForm = () => {
     addSkill,
     updateSkill,
     removeSkill
-  } = useResume();
+  } = useResumeContext();
   
   const [activeTab, setActiveTab] = useState("personal");
   

@@ -2,13 +2,13 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { templates } from '@/lib/templates';
-import { useResume } from '@/lib/resumeContext';
+import { TEMPLATES } from '@/lib/templates';
+import { useResumeContext } from '@/lib/resumeContext';
 import Navbar from '@/components/Navbar';
 import { Check, ChevronRight } from 'lucide-react';
 
 const Templates = () => {
-  const { selectedTemplate, setSelectedTemplate } = useResume();
+  const { selectedTemplate, setSelectedTemplate } = useResumeContext();
 
   useEffect(() => {
     // Scroll to top when component mounts
@@ -34,9 +34,9 @@ const Templates = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            {templates.map((template, index) => (
+            {TEMPLATES.map((template, index) => (
               <div 
-                key={template.id}
+                key={template.key}
                 className={`
                   bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-sm border border-gray-200 dark:border-gray-800
                   hover:shadow-md transition-all duration-300
@@ -45,13 +45,13 @@ const Templates = () => {
               >
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <img
-                    src={template.previewImage}
+                    src={template.image}
                     alt={`${template.name} template`}
                     className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                   
-                  {selectedTemplate === template.id && (
+                  {selectedTemplate === template.key && (
                     <div className="absolute top-4 right-4 bg-primary text-white rounded-full p-1.5 shadow-lg animate-scale">
                       <Check className="h-4 w-4" />
                     </div>
@@ -64,27 +64,16 @@ const Templates = () => {
                 </div>
                 
                 <div className="p-6">
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {template.features.map((feature, i) => (
-                      <span 
-                        key={i} 
-                        className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 rounded-full"
-                      >
-                        {feature}
-                      </span>
-                    ))}
-                  </div>
-                  
                   <div className="flex space-x-3">
                     <Button 
-                      variant={selectedTemplate === template.id ? "default" : "outline"}
-                      onClick={() => setSelectedTemplate(template.id)}
+                      variant={selectedTemplate === template.key ? "default" : "outline"}
+                      onClick={() => setSelectedTemplate(template.key)}
                       className="flex-1"
                     >
-                      {selectedTemplate === template.id ? 'Selected' : 'Select'}
+                      {selectedTemplate === template.key ? 'Selected' : 'Select'}
                     </Button>
                     <Button asChild variant="outline">
-                      <Link to={`/builder?template=${template.id}`} className="flex-1 flex justify-center">
+                      <Link to={`/builder?template=${template.key}`} className="flex-1 flex justify-center">
                         Use Template
                       </Link>
                     </Button>
