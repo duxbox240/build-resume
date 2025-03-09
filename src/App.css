@@ -5,6 +5,7 @@
   margin: 0 auto;
   padding: 0;
   text-align: center;
+  overflow-x: hidden;
 }
 
 .logo {
@@ -45,11 +46,47 @@
   color: #888;
 }
 
-/* Mobile Responsive Styles */
+/* Mobile Responsive Styles - Enhanced */
 @media (max-width: 768px) {
   .container {
     padding-left: 1rem;
     padding-right: 1rem;
+    width: 100%;
+  }
+  
+  /* Improve mobile buttons */
+  button, .button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    min-height: 44px; /* Better touch targets */
+  }
+  
+  /* Fix overflow issues on mobile */
+  .mobile-container {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* Adjust spacing on mobile */
+  .mobile-p {
+    padding: 1rem !important;
+  }
+  
+  .mobile-px {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  .mobile-py {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+  
+  /* Prevent horizontal scrolling */
+  html, body, #root {
+    overflow-x: hidden;
+    position: relative;
+    width: 100%;
   }
 }
 
@@ -72,4 +109,33 @@
 /* Smoother Scrolling */
 html {
   scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+/* Mobile-friendly viewport control */
+body {
+  text-size-adjust: 100%; /* Prevent automatic text resizing */
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior-y: none; /* Prevent pull-to-refresh on mobile */
+}
+
+/* Mobile-optimized form elements */
+@media (max-width: 768px) {
+  input, textarea, select {
+    font-size: 16px !important; /* Prevents zoom on focus in iOS */
+    max-width: 100%;
+  }
+  
+  /* Improved tap targets */
+  a, button, [role="button"] {
+    padding: 0.5rem;
+    margin: 0.25rem;
+  }
+  
+  /* Fix for fixed positioned elements on iOS */
+  .ios-fixed-fix {
+    position: fixed;
+    width: 100%;
+    transform: translateZ(0);
+  }
 }

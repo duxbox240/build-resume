@@ -41,9 +41,9 @@ const Navbar = () => {
 
   return (
     <nav className={cn(
-      "fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-3 md:py-4",
+      "fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-3 md:py-4 ios-fixed-fix",
       isScrolled 
-        ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg shadow-sm" 
+        ? "bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-sm" 
         : "bg-transparent"
     )}>
       <div className="container mx-auto px-4 md:px-6">
@@ -82,9 +82,9 @@ const Navbar = () => {
             </Button>
           </div>
           
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - Enhanced touch target */}
           <button 
-            className="md:hidden p-2 z-10 relative"
+            className="md:hidden p-3 z-10 relative mobile-touch-target"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -96,16 +96,16 @@ const Navbar = () => {
           </button>
         </div>
         
-        {/* Mobile Menu - Full Screen Overlay */}
+        {/* Mobile Menu - Full Screen Overlay - Enhanced for better mobile experience */}
         <div className={cn(
-          "fixed inset-0 bg-white dark:bg-gray-900 transition-transform duration-300 ease-in-out transform pt-20 px-6 pb-6 flex flex-col z-0",
+          "fixed inset-0 bg-white dark:bg-gray-900 transition-transform duration-300 ease-in-out transform pt-20 px-6 pb-6 flex flex-col z-0 overflow-y-auto mobile-scroll-container",
           isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"
         )}>
           <div className="flex flex-col space-y-4 mt-4">
             <Link 
               to="/" 
               className={cn(
-                "px-4 py-3 rounded-lg text-lg font-medium transition-colors",
+                "px-4 py-4 rounded-lg text-lg font-medium transition-colors mobile-touch-target",
                 location.pathname === "/" 
                   ? "bg-primary/10 text-primary" 
                   : "hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -116,7 +116,7 @@ const Navbar = () => {
             <Link 
               to="/templates" 
               className={cn(
-                "px-4 py-3 rounded-lg text-lg font-medium transition-colors",
+                "px-4 py-4 rounded-lg text-lg font-medium transition-colors mobile-touch-target",
                 location.pathname === "/templates" 
                   ? "bg-primary/10 text-primary" 
                   : "hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -127,7 +127,7 @@ const Navbar = () => {
             <Link 
               to="/builder" 
               className={cn(
-                "px-4 py-3 rounded-lg text-lg font-medium transition-colors",
+                "px-4 py-4 rounded-lg text-lg font-medium transition-colors mobile-touch-target",
                 location.pathname === "/builder" 
                   ? "bg-primary/10 text-primary" 
                   : "hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -136,8 +136,8 @@ const Navbar = () => {
               Builder
             </Link>
             
-            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800">
-              <Button asChild size="lg" className="w-full">
+            <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-800">
+              <Button asChild size="lg" className="w-full h-14 text-base">
                 <Link to="/templates" className="flex items-center justify-center">
                   <Download className="mr-2 h-5 w-5" />
                   <span>Create Resume</span>
@@ -146,7 +146,7 @@ const Navbar = () => {
             </div>
           </div>
           
-          <div className="mt-auto text-center text-sm text-gray-500">
+          <div className="mt-auto text-center text-sm text-gray-500 pt-8">
             <p>© {new Date().getFullYear()} ResumeBuilder</p>
           </div>
         </div>
