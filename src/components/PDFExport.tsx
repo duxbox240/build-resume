@@ -14,22 +14,56 @@ import { Separator } from "@/components/ui/separator";
 import { useResumeContext } from "@/lib/resumeContext";
 import { getTemplateByKey } from "@/lib/templates";
 import { toast } from "sonner";
+import html2pdf from 'html2pdf.js';
 
 const PDFExport = () => {
   const { resumeData, selectedTemplate } = useResumeContext();
   const previewRef = useRef<HTMLDivElement>(null);
 
-  // This would use a library like html2pdf.js or jsPDF in a real implementation
   const handleExport = () => {
-    // Simulate download delay
-    toast.promise(
-      new Promise((resolve) => setTimeout(resolve, 1500)),
-      {
-        loading: "Generating PDF...",
-        success: "Resume PDF downloaded successfully!",
-        error: "Failed to generate PDF. Please try again.",
+    if (!previewRef.current) {
+      toast.error("Could not generate PDF. Please try again.");
+      return;
+    }
+
+    toast.loading("Generating PDF...");
+
+    // Clone the preview div to avoid modifying the visible DOM
+    const element = previewRef.current.cloneNode(true) as HTMLElement;
+    
+    // Remove the scaling for the PDF export
+    element.style.transform = 'none';
+    element.style.width = '100%';
+    element.style.height = '100%';
+
+    // Configure html2pdf options
+    const opt = {
+      margin: [0, 0, 0, 0],
+      filename: `${resumeData.personal.name || 'Resume'}.pdf`,
+      image: { type: 'jpeg', quality: 1 },
+      html2canvas: { 
+        scale: 2,
+        useCORS: true,
+        letterRendering: true,
+      },
+      jsPDF: { 
+        unit: 'mm', 
+        format: 'a4', 
+        orientation: 'portrait' 
       }
-    );
+    };
+
+    // Generate PDF and trigger download
+    html2pdf().from(element).set(opt).save()
+      .then(() => {
+        toast.dismiss();
+        toast.success("Resume PDF downloaded successfully!");
+      })
+      .catch((error) => {
+        console.error("PDF generation error:", error);
+        toast.dismiss();
+        toast.error("Failed to generate PDF. Please try again.");
+      });
   };
 
   const Template = getTemplateByKey(selectedTemplate);
