@@ -1,6 +1,6 @@
 
 import { useRef } from "react";
-import { Download } from "lucide-react";
+import { Download, FileCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { 
   Dialog,
@@ -71,24 +71,24 @@ const PDFExport = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>
+        <Button className="w-full md:w-auto transition-all hover:shadow-md">
           <Download className="mr-2 h-4 w-4" />
           Export PDF
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
-        <DialogHeader>
-          <DialogTitle>Export Resume as PDF</DialogTitle>
-          <DialogDescription>
+      <DialogContent className="sm:max-w-[600px] p-0 overflow-hidden rounded-xl">
+        <DialogHeader className="p-6 bg-gradient-to-r from-primary/10 to-primary/5">
+          <DialogTitle className="text-2xl font-bold">Export Resume as PDF</DialogTitle>
+          <DialogDescription className="text-base opacity-90">
             Preview your resume before exporting to PDF
           </DialogDescription>
         </DialogHeader>
         
-        <Separator className="my-4" />
+        <Separator />
         
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center p-6">
           <div
-            className="h-80 w-full overflow-hidden bg-white rounded border"
+            className="h-80 w-full overflow-hidden bg-white rounded-md border shadow-sm"
             style={{ maxHeight: "300px" }}
           >
             <div 
@@ -100,8 +100,12 @@ const PDFExport = () => {
             </div>
           </div>
           
-          <Button onClick={handleExport} className="mt-6">
-            <Download className="mr-2 h-4 w-4" />
+          <Button 
+            onClick={handleExport} 
+            className="mt-6 w-full sm:w-auto button-glow"
+            size="lg"
+          >
+            <FileCheck className="mr-2 h-5 w-5" />
             Download PDF
           </Button>
         </div>
