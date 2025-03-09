@@ -1,12 +1,13 @@
-
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, FileText, Clock, Download, Layout, RefreshCw } from 'lucide-react';
+import { ChevronRight, FileText, Clock, Download, Layout, RefreshCw, LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Navbar from '@/components/Navbar';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/lib/authContext';
 
 const Index = () => {
+  const { user } = useAuth();
   const featureRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
@@ -81,14 +82,23 @@ const Index = () => {
                 Choose from beautiful templates and export as a polished PDF.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg" className="shadow-sm button-glow">
-                  <Link to="/templates" className="flex items-center">
-                    Get Started
-                    <ChevronRight className="ml-2 h-5 w-5" />
-                  </Link>
-                </Button>
+                {user ? (
+                  <Button asChild size="lg" className="shadow-sm button-glow">
+                    <Link to="/templates" className="flex items-center">
+                      Get Started
+                      <ChevronRight className="ml-2 h-5 w-5" />
+                    </Link>
+                  </Button>
+                ) : (
+                  <Button asChild size="lg" className="shadow-sm button-glow">
+                    <Link to="/auth" className="flex items-center">
+                      Sign In / Sign Up
+                      <LogIn className="ml-2 h-5 w-5" />
+                    </Link>
+                  </Button>
+                )}
                 <Button asChild variant="outline" size="lg">
-                  <Link to="/templates">
+                  <Link to={user ? "/templates" : "/auth"}>
                     View Templates
                   </Link>
                 </Button>
