@@ -49,15 +49,15 @@
 /* Mobile Responsive Styles - Enhanced */
 @media (max-width: 768px) {
   .container {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
     width: 100%;
   }
   
   /* Improve mobile buttons */
   button, .button {
     padding: 0.5rem 1rem;
-    font-size: 1rem;
+    font-size: 0.875rem;
     min-height: 44px; /* Better touch targets */
   }
   
@@ -69,17 +69,36 @@
   
   /* Adjust spacing on mobile */
   .mobile-p {
-    padding: 1rem !important;
+    padding: 0.75rem !important;
   }
   
   .mobile-px {
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
   }
   
   .mobile-py {
-    padding-top: 1rem !important;
-    padding-bottom: 1rem !important;
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+  }
+  
+  /* Tab navigation improvements */
+  [role="tablist"] {
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.25rem;
+  }
+  
+  [role="tab"] {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    min-width: 0;
+    flex: 1;
+  }
+  
+  /* Better form field spacing */
+  .form-group {
+    margin-bottom: 0.75rem;
   }
   
   /* Prevent horizontal scrolling */
@@ -87,6 +106,13 @@
     overflow-x: hidden;
     position: relative;
     width: 100%;
+  }
+  
+  /* Improve resume form navigation tabs */
+  .resume-form-tabs [role="tab"] {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.7rem;
+    min-width: 0;
   }
 }
 
@@ -124,12 +150,18 @@ body {
   input, textarea, select {
     font-size: 16px !important; /* Prevents zoom on focus in iOS */
     max-width: 100%;
+    padding: 0.5rem 0.75rem;
   }
   
   /* Improved tap targets */
   a, button, [role="button"] {
     padding: 0.5rem;
     margin: 0.25rem;
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
   
   /* Fix for fixed positioned elements on iOS */
@@ -137,5 +169,30 @@ body {
     position: fixed;
     width: 100%;
     transform: translateZ(0);
+  }
+  
+  /* Resume builder specific mobile improvements */
+  .resume-form-container {
+    padding: 0.5rem !important;
+  }
+  
+  .resume-tabs-container {
+    padding: 0 !important;
+  }
+  
+  .resume-form-tabs {
+    margin-bottom: 0.5rem !important;
+  }
+  
+  /* Mobile-friendly buttons in header */
+  .builder-header-buttons {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  
+  .builder-header-buttons button {
+    flex: 1;
   }
 }

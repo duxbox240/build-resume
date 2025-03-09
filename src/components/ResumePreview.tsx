@@ -17,13 +17,13 @@ const ResumePreview = ({ fullPage = false }: ResumePreviewProps) => {
   return (
     <div className={cn(
       "bg-white rounded-lg shadow-lg overflow-hidden mx-auto",
-      fullPage ? "w-full max-w-full md:max-w-4xl h-auto min-h-[800px] md:min-h-[1056px]" : "w-full max-w-[95%] md:max-w-full aspect-[1/1.414] scale-90 origin-top", // A4 ratio
+      fullPage ? "w-full max-w-full md:max-w-4xl h-auto min-h-[800px] md:min-h-[1056px]" : "w-full max-w-[100%] md:max-w-full aspect-[1/1.414] scale-90 origin-top", // A4 ratio with improved mobile width
     )}>
       <div 
         ref={previewRef}
         className="w-full h-full bg-white"
         style={{
-          transform: fullPage ? "none" : "scale(0.7)",
+          transform: fullPage ? "none" : "scale(0.65)", // Smaller scale on mobile
           transformOrigin: "top center",
         }}
       >
