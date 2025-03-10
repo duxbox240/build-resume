@@ -15,8 +15,13 @@ import { useResumeContext } from "@/lib/resumeContext";
 import { getTemplateByKey } from "@/lib/templates";
 import { toast } from "sonner";
 import html2pdf from 'html2pdf.js';
+import { cn } from "@/lib/utils";
 
-const PDFExport = () => {
+interface PDFExportProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  className?: string;
+}
+
+const PDFExport = ({ className, ...props }: PDFExportProps) => {
   const { resumeData, selectedTemplate } = useResumeContext();
   const previewRef = useRef<HTMLDivElement>(null);
 
@@ -71,7 +76,7 @@ const PDFExport = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="w-full md:w-auto transition-all hover:shadow-md">
+        <Button className={cn("w-full md:w-auto transition-all hover:shadow-md", className)} {...props}>
           <Download className="mr-2 h-4 w-4" />
           Export PDF
         </Button>
