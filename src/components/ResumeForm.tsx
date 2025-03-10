@@ -45,18 +45,18 @@ const ResumeForm = () => {
   
   return (
     <div className="bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 h-full flex flex-col">
-      <ScrollArea className="flex-1 p-6">
+      <ScrollArea className="flex-1 p-4 sm:p-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid grid-cols-6 mb-8">
-            <TabsTrigger value="personal" className="text-xs sm:text-sm">Personal</TabsTrigger>
-            <TabsTrigger value="education" className="text-xs sm:text-sm">Education</TabsTrigger>
-            <TabsTrigger value="experience" className="text-xs sm:text-sm">Experience</TabsTrigger>
-            <TabsTrigger value="projects" className="text-xs sm:text-sm">Projects</TabsTrigger>
-            <TabsTrigger value="skills" className="text-xs sm:text-sm">Skills</TabsTrigger>
-            <TabsTrigger value="template" className="text-xs sm:text-sm">Template</TabsTrigger>
+          <TabsList className="w-full grid grid-cols-3 lg:grid-cols-6 mb-6 gap-1 p-1">
+            <TabsTrigger value="personal" className="text-[10px] md:text-xs px-1 py-1.5">Personal</TabsTrigger>
+            <TabsTrigger value="education" className="text-[10px] md:text-xs px-1 py-1.5">Education</TabsTrigger>
+            <TabsTrigger value="experience" className="text-[10px] md:text-xs px-1 py-1.5">Experience</TabsTrigger>
+            <TabsTrigger value="projects" className="text-[10px] md:text-xs px-1 py-1.5">Projects</TabsTrigger>
+            <TabsTrigger value="skills" className="text-[10px] md:text-xs px-1 py-1.5">Skills</TabsTrigger>
+            <TabsTrigger value="template" className="text-[10px] md:text-xs px-1 py-1.5">Template</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="personal" className="space-y-4 animate-fade-in">
+          <TabsContent value="personal" className="space-y-6 animate-fade-in">
             <div className="flex flex-col items-center mb-6">
               <div className="relative mb-4">
                 <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center justify-center border border-gray-200 dark:border-gray-700">
@@ -81,82 +81,89 @@ const ResumeForm = () => {
                   />
                 </label>
               </div>
-              <p className="text-sm text-gray-500">Upload a profile picture (optional)</p>
+              <p className="text-xs text-gray-500 mt-1">Upload a profile picture (optional)</p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
+                <Label htmlFor="name" className="text-sm font-medium">Full Name</Label>
                 <Input 
                   id="name"
                   value={resumeData.personal.name}
                   onChange={(e) => updatePersonalInfo({ name: e.target.value })}
                   placeholder="John Doe"
+                  className="h-9"
                 />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="title">Professional Title</Label>
+                <Label htmlFor="title" className="text-sm font-medium">Professional Title</Label>
                 <Input 
                   id="title"
                   value={resumeData.personal.title}
                   onChange={(e) => updatePersonalInfo({ title: e.target.value })}
                   placeholder="Senior Software Engineer"
+                  className="h-9"
                 />
               </div>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className="text-sm font-medium">Email</Label>
                 <Input 
                   id="email"
                   value={resumeData.personal.email}
                   onChange={(e) => updatePersonalInfo({ email: e.target.value })}
                   placeholder="john.doe@example.com"
                   type="email"
+                  className="h-9"
                 />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="phone">Phone</Label>
+                <Label htmlFor="phone" className="text-sm font-medium">Phone</Label>
                 <Input 
                   id="phone"
                   value={resumeData.personal.phone}
                   onChange={(e) => updatePersonalInfo({ phone: e.target.value })}
                   placeholder="(555) 123-4567"
+                  className="h-9"
                 />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="website">Website</Label>
+                <Label htmlFor="website" className="text-sm font-medium">Website</Label>
                 <Input 
                   id="website"
                   value={resumeData.personal.website}
                   onChange={(e) => updatePersonalInfo({ website: e.target.value })}
                   placeholder="www.johndoe.com"
+                  className="h-9"
                 />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="location">Location</Label>
+                <Label htmlFor="location" className="text-sm font-medium">Location</Label>
                 <Input 
                   id="location"
                   value={resumeData.personal.location}
                   onChange={(e) => updatePersonalInfo({ location: e.target.value })}
                   placeholder="San Francisco, CA"
+                  className="h-9"
                 />
               </div>
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="summary">Professional Summary</Label>
+              <Label htmlFor="summary" className="text-sm font-medium">Professional Summary</Label>
               <Textarea 
                 id="summary"
                 value={resumeData.personal.summary}
                 onChange={(e) => updatePersonalInfo({ summary: e.target.value })}
                 placeholder="Write a brief summary of your professional experience and skills..."
                 rows={4}
+                className="resize-none"
               />
             </div>
           </TabsContent>
@@ -500,7 +507,7 @@ const ResumeForm = () => {
       </ScrollArea>
       
       <div className="p-4 border-t border-gray-200 dark:border-gray-800 flex justify-between items-center">
-        <div className="text-sm text-gray-500">
+        <div className="text-xs sm:text-sm text-gray-500">
           {activeTab === "personal" && "1/5 Personal Info"}
           {activeTab === "education" && "2/5 Education"}
           {activeTab === "experience" && "3/5 Experience"}
@@ -519,6 +526,7 @@ const ResumeForm = () => {
               setActiveTab(tabs[prevIndex]);
             }}
             disabled={activeTab === "personal"}
+            className="h-8 text-xs px-3"
           >
             Previous
           </Button>
@@ -531,6 +539,7 @@ const ResumeForm = () => {
               setActiveTab(tabs[nextIndex]);
             }}
             disabled={activeTab === "template"}
+            className="h-8 text-xs px-3"
           >
             Next
           </Button>

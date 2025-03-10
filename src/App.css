@@ -94,6 +94,9 @@
     padding: 0.5rem 0.75rem;
     min-width: 0;
     flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
   /* Better form field spacing */
@@ -194,5 +197,68 @@ body {
   
   .builder-header-buttons button {
     flex: 1;
+  }
+}
+
+/* Additional spacing and sizing fixes */
+.form-label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Prevent text overflow in tabs and buttons */
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Ensure form field proper spacing */
+.form-field {
+  margin-bottom: 1rem;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+/* Make sure elements don't collide */
+.spaced-content > * {
+  margin-bottom: 1rem;
+}
+
+/* Better text contrast */
+input, textarea, select {
+  color: #333;
+}
+
+/* Ensure consistent spacing in grid layouts */
+.grid {
+  gap: 1rem;
+}
+
+/* Small devices improvements */
+@media (max-width: 480px) {
+  .xxs-text {
+    font-size: 0.7rem !important;
+  }
+  
+  .xxs-p {
+    padding: 0.375rem !important;
+  }
+  
+  .xxs-stack {
+    flex-direction: column !important;
+  }
+  
+  .xxs-w-full {
+    width: 100% !important;
+  }
+  
+  h1, h2, h3 {
+    word-break: break-word;
   }
 }
