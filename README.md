@@ -21,3 +21,7 @@ A modern, customizable resume builder application that allows users to create pr
 ## Deployment
 
 This application is deployed on Railway. You can access it at: https://resume-mosaic-02-production.up.railway.app/
+
+## Link Preview
+
+When sharing links to the application, the preview should show "Your Custom Resume Builder" with a custom preview image and description.
