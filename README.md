@@ -1,5 +1,5 @@
 
-# Resume Builder
+# Build-Resume
 
 A modern, customizable resume builder application that allows users to create professional resumes with ease. 
 
@@ -20,7 +20,7 @@ A modern, customizable resume builder application that allows users to create pr
 
 ## Deployment
 
-This application is deployed on Railway. You can access it at: https://resume-mosaic-02-production.up.railway.app/
+This application is deployed on Railway. You can access it at: https://build-resume.up.railway.app/
 
 ## Link Preview
 
