@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -26,7 +25,10 @@ const ResumeForm = () => {
     removeProject,
     addSkill,
     updateSkill,
-    removeSkill
+    removeSkill,
+    addCertification,
+    updateCertification,
+    removeCertification
   } = useResumeContext();
   
   const [activeTab, setActiveTab] = useState("personal");
@@ -47,12 +49,13 @@ const ResumeForm = () => {
     <div className="bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 h-full flex flex-col">
       <ScrollArea className="flex-1 p-4 sm:p-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="w-full grid grid-cols-3 lg:grid-cols-6 mb-6 gap-1 p-1">
+          <TabsList className="w-full grid grid-cols-3 lg:grid-cols-7 mb-6 gap-1 p-1">
             <TabsTrigger value="personal" className="text-[10px] md:text-xs px-1 py-1.5">Personal</TabsTrigger>
             <TabsTrigger value="education" className="text-[10px] md:text-xs px-1 py-1.5">Education</TabsTrigger>
             <TabsTrigger value="experience" className="text-[10px] md:text-xs px-1 py-1.5">Experience</TabsTrigger>
             <TabsTrigger value="projects" className="text-[10px] md:text-xs px-1 py-1.5">Projects</TabsTrigger>
             <TabsTrigger value="skills" className="text-[10px] md:text-xs px-1 py-1.5">Skills</TabsTrigger>
+            <TabsTrigger value="certifications" className="text-[10px] md:text-xs px-1 py-1.5">Certs</TabsTrigger>
             <TabsTrigger value="template" className="text-[10px] md:text-xs px-1 py-1.5">Template</TabsTrigger>
           </TabsList>
           
@@ -500,6 +503,75 @@ const ResumeForm = () => {
             </Button>
           </TabsContent>
           
+          <TabsContent value="certifications" className="space-y-6 animate-fade-in">
+            {resumeData.certifications.map((cert, index) => (
+              <div key={index} className="p-4 border border-gray-200 dark:border-gray-800 rounded-lg bg-gray-50 dark:bg-gray-800/50 relative group">
+                <Button 
+                  variant="destructive" 
+                  size="icon" 
+                  className="absolute -top-3 -right-3 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm"
+                  onClick={() => removeCertification(index)}
+                >
+                  <Trash2 className="h-3 w-3" />
+                </Button>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div className="space-y-2">
+                    <Label htmlFor={`cert-name-${index}`}>Certification Name</Label>
+                    <Input 
+                      id={`cert-name-${index}`}
+                      value={cert.name}
+                      onChange={(e) => updateCertification(index, { 
+                        ...cert,
+                        name: e.target.value 
+                      })}
+                      placeholder="AWS Certified Developer"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor={`issuer-${index}`}>Issuing Organization</Label>
+                    <Input 
+                      id={`issuer-${index}`}
+                      value={cert.issuer}
+                      onChange={(e) => updateCertification(index, { 
+                        ...cert,
+                        issuer: e.target.value 
+                      })}
+                      placeholder="Amazon Web Services"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor={`cert-date-${index}`}>Date</Label>
+                    <Input 
+                      id={`cert-date-${index}`}
+                      value={cert.date}
+                      onChange={(e) => updateCertification(index, { 
+                        ...cert,
+                        date: e.target.value 
+                      })}
+                      placeholder="MM/YYYY"
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+            
+            <Button 
+              variant="outline" 
+              className="w-full flex items-center gap-2"
+              onClick={() => addCertification({
+                name: '',
+                issuer: '',
+                date: ''
+              })}
+            >
+              <PlusCircle className="h-4 w-4" />
+              <span>Add Certification</span>
+            </Button>
+          </TabsContent>
+          
           <TabsContent value="template" className="animate-fade-in">
             <TemplateSelector />
           </TabsContent>
@@ -508,19 +580,20 @@ const ResumeForm = () => {
       
       <div className="p-4 border-t border-gray-200 dark:border-gray-800 flex justify-between items-center">
         <div className="text-xs sm:text-sm text-gray-500">
-          {activeTab === "personal" && "1/5 Personal Info"}
-          {activeTab === "education" && "2/5 Education"}
-          {activeTab === "experience" && "3/5 Experience"}
-          {activeTab === "projects" && "4/5 Projects"}
-          {activeTab === "skills" && "5/5 Skills"}
-          {activeTab === "template" && "Template Selection"}
+          {activeTab === "personal" && "1/7 Personal Info"}
+          {activeTab === "education" && "2/7 Education"}
+          {activeTab === "experience" && "3/7 Experience"}
+          {activeTab === "projects" && "4/7 Projects"}
+          {activeTab === "skills" && "5/7 Skills"}
+          {activeTab === "certifications" && "6/7 Certifications"}
+          {activeTab === "template" && "7/7 Template Selection"}
         </div>
         
         <div className="flex space-x-2">
           <Button
             variant="outline"
             onClick={() => {
-              const tabs = ["personal", "education", "experience", "projects", "skills", "template"];
+              const tabs = ["personal", "education", "experience", "projects", "skills", "certifications", "template"];
               const currentIndex = tabs.indexOf(activeTab);
               const prevIndex = (currentIndex - 1 + tabs.length) % tabs.length;
               setActiveTab(tabs[prevIndex]);
@@ -533,7 +606,7 @@ const ResumeForm = () => {
           
           <Button
             onClick={() => {
-              const tabs = ["personal", "education", "experience", "projects", "skills", "template"];
+              const tabs = ["personal", "education", "experience", "projects", "skills", "certifications", "template"];
               const currentIndex = tabs.indexOf(activeTab);
               const nextIndex = (currentIndex + 1) % tabs.length;
               setActiveTab(tabs[nextIndex]);

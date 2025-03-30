@@ -90,7 +90,20 @@ const MinimalistTemplate = ({ resumeData }: MinimalistTemplateProps) => {
           <div className="space-y-5">
             {projects.map((project, index) => (
               <div key={index} className="text-sm">
-                <h3 className="font-semibold">{project.name}</h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="font-semibold">{project.name}</h3>
+                  {project.link && (
+                    <a 
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-500 hover:text-gray-800 hover:underline text-xs"
+                    >
+                      View
+                    </a>
+                  )}
+                </div>
+                {project.technologies && <p className="text-xs text-gray-600 mt-1">Tech: {project.technologies}</p>}
                 {project.description && <p className="mt-1 text-sm">{project.description}</p>}
               </div>
             ))}

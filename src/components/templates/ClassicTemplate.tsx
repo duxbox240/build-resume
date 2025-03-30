@@ -110,7 +110,20 @@ const ClassicTemplate = ({ resumeData }: ClassicTemplateProps) => {
           <div className="space-y-4">
             {projects.map((project, index) => (
               <div key={index} className="text-sm">
-                <h3 className="font-bold">{project.name}</h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="font-bold">{project.name}</h3>
+                  {project.link && (
+                    <a 
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-600 hover:underline text-xs"
+                    >
+                      (View Project)
+                    </a>
+                  )}
+                </div>
+                {project.technologies && <p className="text-xs font-medium mt-1">Technologies: {project.technologies}</p>}
                 {project.description && <p className="mt-1">{project.description}</p>}
               </div>
             ))}
