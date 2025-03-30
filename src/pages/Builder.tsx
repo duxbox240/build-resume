@@ -7,7 +7,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ResumeForm from "@/components/ResumeForm";
 import ResumePreview from "@/components/ResumePreview";
 import Navbar from "@/components/Navbar";
-import { useResumeContext } from "@/lib/resumeContext";
 import PDFExport from "@/components/PDFExport";
 import { toast } from "sonner";
 

@@ -53,63 +53,67 @@ const ResumeForm = () => {
     <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md border border-gray-200 dark:border-gray-800 h-full flex flex-col overflow-hidden">
       <ScrollArea className="flex-1 p-4 sm:p-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="w-full grid grid-cols-7 mb-8 p-1 bg-gray-100 dark:bg-gray-800 rounded-xl">
-            <TabsTrigger 
-              value="personal" 
-              className="flex flex-col items-center gap-1 py-3 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm"
-            >
-              <User className="h-4 w-4" />
-              <span className="text-[10px] md:text-xs">Personal</span>
-            </TabsTrigger>
+          <div className="flex flex-col gap-2 mb-8">
+            <TabsList className="w-full grid grid-cols-4 p-1 bg-gray-100 dark:bg-gray-800 rounded-xl">
+              <TabsTrigger 
+                value="personal" 
+                className="flex flex-col items-center gap-1 py-3 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm"
+              >
+                <User className="h-4 w-4" />
+                <span className="text-xs">Personal</span>
+              </TabsTrigger>
+              
+              <TabsTrigger 
+                value="education" 
+                className="flex flex-col items-center gap-1 py-3 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm"
+              >
+                <GraduationCap className="h-4 w-4" />
+                <span className="text-xs">Education</span>
+              </TabsTrigger>
+              
+              <TabsTrigger 
+                value="experience" 
+                className="flex flex-col items-center gap-1 py-3 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm"
+              >
+                <Briefcase className="h-4 w-4" />
+                <span className="text-xs">Work</span>
+              </TabsTrigger>
+              
+              <TabsTrigger 
+                value="projects" 
+                className="flex flex-col items-center gap-1 py-3 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm"
+              >
+                <FolderKanban className="h-4 w-4" />
+                <span className="text-xs">Projects</span>
+              </TabsTrigger>
+            </TabsList>
             
-            <TabsTrigger 
-              value="education" 
-              className="flex flex-col items-center gap-1 py-3 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm"
-            >
-              <GraduationCap className="h-4 w-4" />
-              <span className="text-[10px] md:text-xs">Education</span>
-            </TabsTrigger>
-            
-            <TabsTrigger 
-              value="experience" 
-              className="flex flex-col items-center gap-1 py-3 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm"
-            >
-              <Briefcase className="h-4 w-4" />
-              <span className="text-[10px] md:text-xs">Work</span>
-            </TabsTrigger>
-            
-            <TabsTrigger 
-              value="projects" 
-              className="flex flex-col items-center gap-1 py-3 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm"
-            >
-              <FolderKanban className="h-4 w-4" />
-              <span className="text-[10px] md:text-xs">Projects</span>
-            </TabsTrigger>
-            
-            <TabsTrigger 
-              value="skills" 
-              className="flex flex-col items-center gap-1 py-3 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm"
-            >
-              <Award className="h-4 w-4" />
-              <span className="text-[10px] md:text-xs">Skills</span>
-            </TabsTrigger>
-            
-            <TabsTrigger 
-              value="certifications" 
-              className="flex flex-col items-center gap-1 py-3 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm"
-            >
-              <BadgeCheck className="h-4 w-4" />
-              <span className="text-[10px] md:text-xs">Certs</span>
-            </TabsTrigger>
-            
-            <TabsTrigger 
-              value="template" 
-              className="flex flex-col items-center gap-1 py-3 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm"
-            >
-              <PaintBucket className="h-4 w-4" />
-              <span className="text-[10px] md:text-xs">Design</span>
-            </TabsTrigger>
-          </TabsList>
+            <TabsList className="w-full grid grid-cols-3 p-1 bg-gray-100 dark:bg-gray-800 rounded-xl">
+              <TabsTrigger 
+                value="skills" 
+                className="flex flex-col items-center gap-1 py-3 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm"
+              >
+                <Award className="h-4 w-4" />
+                <span className="text-xs">Skills</span>
+              </TabsTrigger>
+              
+              <TabsTrigger 
+                value="certifications" 
+                className="flex flex-col items-center gap-1 py-3 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm"
+              >
+                <BadgeCheck className="h-4 w-4" />
+                <span className="text-xs">Certifications</span>
+              </TabsTrigger>
+              
+              <TabsTrigger 
+                value="template" 
+                className="flex flex-col items-center gap-1 py-3 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm"
+              >
+                <PaintBucket className="h-4 w-4" />
+                <span className="text-xs">Design</span>
+              </TabsTrigger>
+            </TabsList>
+          </div>
           
           <TabsContent value="personal" className="space-y-6 animate-fade-in">
             <div className="flex flex-col items-center mb-6">
