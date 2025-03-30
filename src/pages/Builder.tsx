@@ -27,17 +27,17 @@ const Builder = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
       <Navbar />
       
       <div className="container mx-auto px-2 sm:px-4 pt-20 pb-16 flex-1 flex flex-col overflow-hidden">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-6 gap-3">
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="icon" onClick={handleBack} className="h-8 w-8 md:h-9 md:w-9">
+            <Button variant="outline" size="icon" onClick={handleBack} className="h-9 w-9 shadow-sm hover:shadow">
               <ArrowLeft className="h-4 w-4" />
             </Button>
-            <h1 className="text-lg md:text-xl font-bold flex items-center gap-2">
-              <FileText className="h-4 w-4 md:h-5 md:w-5 text-primary" />
+            <h1 className="text-lg md:text-xl font-bold flex items-center gap-2 text-gray-800 dark:text-gray-100">
+              <FileText className="h-5 w-5 md:h-6 md:w-6 text-primary" />
               Resume Builder
             </h1>
           </div>
@@ -46,12 +46,12 @@ const Builder = () => {
             <Button 
               variant="outline" 
               onClick={handleSave} 
-              className="flex-1 md:flex-none text-xs h-8 md:h-9 px-2 md:px-3"
+              className="flex-1 md:flex-none h-9 px-3 shadow-sm hover:shadow"
             >
-              <Save className="mr-1.5 h-3.5 w-3.5" />
+              <Save className="mr-1.5 h-4 w-4" />
               Save
             </Button>
-            <PDFExport className="flex-1 md:flex-none text-xs h-8 md:h-9 px-2 md:px-3" />
+            <PDFExport className="flex-1 md:flex-none h-9 px-3 shadow-sm hover:shadow" />
           </div>
         </div>
 
@@ -63,9 +63,19 @@ const Builder = () => {
             className="col-span-1 lg:col-span-12 flex flex-col flex-1 overflow-hidden"
           >
             <div className="flex justify-center mb-3 md:mb-5">
-              <TabsList className="h-8 md:h-9">
-                <TabsTrigger value="edit" className="text-xs md:text-sm px-3 py-1.5">Edit</TabsTrigger>
-                <TabsTrigger value="preview" className="text-xs md:text-sm px-3 py-1.5">Preview</TabsTrigger>
+              <TabsList className="h-10 md:h-11 p-1 shadow-md bg-white dark:bg-gray-800 rounded-xl">
+                <TabsTrigger 
+                  value="edit" 
+                  className="text-sm md:text-base px-4 py-2 rounded-lg transition-all data-[state=active]:shadow-sm data-[state=active]:bg-primary data-[state=active]:text-white"
+                >
+                  Edit
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="preview" 
+                  className="text-sm md:text-base px-4 py-2 rounded-lg transition-all data-[state=active]:shadow-sm data-[state=active]:bg-primary data-[state=active]:text-white"
+                >
+                  Preview
+                </TabsTrigger>
               </TabsList>
             </div>
 

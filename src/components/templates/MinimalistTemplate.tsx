@@ -19,7 +19,11 @@ const MinimalistTemplate = ({ resumeData }: MinimalistTemplateProps) => {
           {personal.email && <span>{personal.email}</span>}
           {personal.phone && <span>{personal.phone}</span>}
           {personal.location && <span>{personal.location}</span>}
-          {personal.website && <span>{personal.website}</span>}
+          {personal.website && (
+            <a href={personal.website} target="_blank" rel="noopener noreferrer" className="hover:text-primary hover:underline">
+              {personal.website}
+            </a>
+          )}
         </div>
       </header>
 
@@ -97,9 +101,9 @@ const MinimalistTemplate = ({ resumeData }: MinimalistTemplateProps) => {
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-500 hover:text-gray-800 hover:underline text-xs"
+                      className="text-primary hover:text-primary-foreground hover:underline text-xs transition-colors"
                     >
-                      View
+                      View Project
                     </a>
                   )}
                 </div>

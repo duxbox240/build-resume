@@ -6,7 +6,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useResumeContext } from '@/lib/resumeContext';
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { PlusCircle, Trash2, Upload } from "lucide-react";
+import { 
+  PlusCircle, Trash2, Upload, User, GraduationCap, 
+  Briefcase, FolderKanban, Award, BadgeCheck, 
+  PaintBucket, ChevronRight, ChevronLeft 
+} from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import TemplateSelector from './TemplateSelector';
 
@@ -46,17 +50,65 @@ const ResumeForm = () => {
   };
   
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 h-full flex flex-col">
+    <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md border border-gray-200 dark:border-gray-800 h-full flex flex-col overflow-hidden">
       <ScrollArea className="flex-1 p-4 sm:p-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="w-full grid grid-cols-3 lg:grid-cols-7 mb-6 gap-1 p-1">
-            <TabsTrigger value="personal" className="text-[10px] md:text-xs px-1 py-1.5">Personal</TabsTrigger>
-            <TabsTrigger value="education" className="text-[10px] md:text-xs px-1 py-1.5">Education</TabsTrigger>
-            <TabsTrigger value="experience" className="text-[10px] md:text-xs px-1 py-1.5">Experience</TabsTrigger>
-            <TabsTrigger value="projects" className="text-[10px] md:text-xs px-1 py-1.5">Projects</TabsTrigger>
-            <TabsTrigger value="skills" className="text-[10px] md:text-xs px-1 py-1.5">Skills</TabsTrigger>
-            <TabsTrigger value="certifications" className="text-[10px] md:text-xs px-1 py-1.5">Certs</TabsTrigger>
-            <TabsTrigger value="template" className="text-[10px] md:text-xs px-1 py-1.5">Template</TabsTrigger>
+          <TabsList className="w-full grid grid-cols-7 mb-8 p-1 bg-gray-100 dark:bg-gray-800 rounded-xl">
+            <TabsTrigger 
+              value="personal" 
+              className="flex flex-col items-center gap-1 py-3 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm"
+            >
+              <User className="h-4 w-4" />
+              <span className="text-[10px] md:text-xs">Personal</span>
+            </TabsTrigger>
+            
+            <TabsTrigger 
+              value="education" 
+              className="flex flex-col items-center gap-1 py-3 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm"
+            >
+              <GraduationCap className="h-4 w-4" />
+              <span className="text-[10px] md:text-xs">Education</span>
+            </TabsTrigger>
+            
+            <TabsTrigger 
+              value="experience" 
+              className="flex flex-col items-center gap-1 py-3 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm"
+            >
+              <Briefcase className="h-4 w-4" />
+              <span className="text-[10px] md:text-xs">Work</span>
+            </TabsTrigger>
+            
+            <TabsTrigger 
+              value="projects" 
+              className="flex flex-col items-center gap-1 py-3 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm"
+            >
+              <FolderKanban className="h-4 w-4" />
+              <span className="text-[10px] md:text-xs">Projects</span>
+            </TabsTrigger>
+            
+            <TabsTrigger 
+              value="skills" 
+              className="flex flex-col items-center gap-1 py-3 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm"
+            >
+              <Award className="h-4 w-4" />
+              <span className="text-[10px] md:text-xs">Skills</span>
+            </TabsTrigger>
+            
+            <TabsTrigger 
+              value="certifications" 
+              className="flex flex-col items-center gap-1 py-3 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm"
+            >
+              <BadgeCheck className="h-4 w-4" />
+              <span className="text-[10px] md:text-xs">Certs</span>
+            </TabsTrigger>
+            
+            <TabsTrigger 
+              value="template" 
+              className="flex flex-col items-center gap-1 py-3 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm"
+            >
+              <PaintBucket className="h-4 w-4" />
+              <span className="text-[10px] md:text-xs">Design</span>
+            </TabsTrigger>
           </TabsList>
           
           <TabsContent value="personal" className="space-y-6 animate-fade-in">
@@ -70,7 +122,7 @@ const ResumeForm = () => {
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <Upload className="h-8 w-8 text-gray-400" />
+                    <User className="h-8 w-8 text-gray-400" />
                   )}
                 </div>
                 <label htmlFor="profile-image" className="absolute -bottom-2 -right-2 bg-primary text-white p-1.5 rounded-full cursor-pointer shadow-sm hover:shadow-md transition-shadow">
@@ -578,8 +630,8 @@ const ResumeForm = () => {
         </Tabs>
       </ScrollArea>
       
-      <div className="p-4 border-t border-gray-200 dark:border-gray-800 flex justify-between items-center">
-        <div className="text-xs sm:text-sm text-gray-500">
+      <div className="p-4 border-t border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gray-50 dark:bg-gray-800/50">
+        <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
           {activeTab === "personal" && "1/7 Personal Info"}
           {activeTab === "education" && "2/7 Education"}
           {activeTab === "experience" && "3/7 Experience"}
@@ -599,8 +651,9 @@ const ResumeForm = () => {
               setActiveTab(tabs[prevIndex]);
             }}
             disabled={activeTab === "personal"}
-            className="h-8 text-xs px-3"
+            className="h-8 text-xs px-3 flex items-center gap-1 bg-white dark:bg-gray-700 shadow-sm"
           >
+            <ChevronLeft className="h-3.5 w-3.5" />
             Previous
           </Button>
           
@@ -612,9 +665,10 @@ const ResumeForm = () => {
               setActiveTab(tabs[nextIndex]);
             }}
             disabled={activeTab === "template"}
-            className="h-8 text-xs px-3"
+            className="h-8 text-xs px-3 flex items-center gap-1 shadow-sm"
           >
             Next
+            <ChevronRight className="h-3.5 w-3.5" />
           </Button>
         </div>
       </div>
