@@ -21,7 +21,7 @@ const ResumePreview = ({ fullPage = false }: ResumePreviewProps) => {
     )}>
       <div 
         ref={previewRef}
-        className="w-full h-full bg-white"
+        className="w-full h-full bg-white print:shadow-none"
         style={{
           transform: fullPage ? "none" : "scale(0.65)", // Smaller scale on mobile
           transformOrigin: "top center",

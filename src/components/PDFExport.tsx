@@ -36,10 +36,54 @@ const PDFExport = ({ className, ...props }: PDFExportProps) => {
     // Clone the preview div to avoid modifying the visible DOM
     const element = previewRef.current.cloneNode(true) as HTMLElement;
     
-    // Remove the scaling for the PDF export
+    // Remove any scaling for PDF export
     element.style.transform = 'none';
     element.style.width = '100%';
     element.style.height = '100%';
+    
+    // Add critical styles to ensure template styling is preserved
+    const styles = document.querySelectorAll('style, link[rel="stylesheet"]');
+    const stylesFragment = document.createDocumentFragment();
+    
+    styles.forEach(style => {
+      const clonedStyle = style.cloneNode(true);
+      stylesFragment.appendChild(clonedStyle);
+    });
+    
+    // Ensure all styles are inlined for PDF export
+    const styleContainer = document.createElement('div');
+    styleContainer.appendChild(stylesFragment);
+    element.insertBefore(styleContainer, element.firstChild);
+
+    // Force all background colors and images to be included
+    const allElements = element.querySelectorAll('*');
+    allElements.forEach(el => {
+      if (el instanceof HTMLElement) {
+        const computedStyle = window.getComputedStyle(el);
+        
+        // Ensure backgrounds are preserved
+        if (computedStyle.backgroundColor && computedStyle.backgroundColor !== 'rgba(0, 0, 0, 0)') {
+          el.style.backgroundColor = computedStyle.backgroundColor;
+        }
+        
+        // Ensure text colors are preserved
+        if (computedStyle.color) {
+          el.style.color = computedStyle.color;
+        }
+        
+        // Ensure borders are preserved
+        if (computedStyle.borderWidth !== '0px') {
+          el.style.borderWidth = computedStyle.borderWidth;
+          el.style.borderStyle = computedStyle.borderStyle;
+          el.style.borderColor = computedStyle.borderColor;
+        }
+        
+        // Ensure font styles are preserved
+        el.style.fontFamily = computedStyle.fontFamily;
+        el.style.fontSize = computedStyle.fontSize;
+        el.style.fontWeight = computedStyle.fontWeight;
+      }
+    });
 
     // Configure html2pdf options
     const opt = {
@@ -50,15 +94,19 @@ const PDFExport = ({ className, ...props }: PDFExportProps) => {
         scale: 2,
         useCORS: true,
         letterRendering: true,
+        logging: true, // Enable logging for debugging
+        backgroundColor: '#FFFFFF' // Ensure white background
       },
       jsPDF: { 
         unit: 'mm', 
         format: 'a4', 
-        orientation: 'portrait' 
+        orientation: 'portrait',
+        compress: true,
+        precision: 16
       }
     };
 
-    // Generate PDF and trigger download
+    // Generate PDF with improved settings
     html2pdf().from(element).set(opt).save()
       .then(() => {
         toast.dismiss();

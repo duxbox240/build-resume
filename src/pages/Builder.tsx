@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Download, Save, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,12 @@ import { toast } from "sonner";
 const Builder = () => {
   const [activeTab, setActiveTab] = useState<string>("edit");
   const navigate = useNavigate();
+
+  // Ensure all styles are loaded before allowing PDF generation
+  useEffect(() => {
+    // Force the browser to calculate and apply all styles
+    document.body.offsetHeight;
+  }, []);
 
   const handleBack = () => {
     navigate("/templates");
